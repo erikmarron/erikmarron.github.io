@@ -1,1 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erik Marron Photography</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 30px 0;
+            text-align: center;
+            border-bottom: 2px solid #444;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            color: #fff;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .location {
+            font-size: 1.2rem;
+            color: #ccc;
+            font-style: italic;
+            letter-spacing: 1px;
+        }
+
+        /* Description */
+        .description {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 0 40px;
+        }
+
+        .description p {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #ddd;
+            max-width: 800px;
+            margin: 0 auto;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        /* Gallery Section */
+        .gallery-section {
+            margin-bottom: 80px;
+        }
+
+        .gallery-main-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 50px;
+            color: #fff;
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .gallery-box {
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.4s ease;
+        }
+
+        .gallery-box:hover {
+            transform: translateY(-10px);
+            background: rgba(255,255,255,0.08);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .gallery-title {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: #fff;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* Carousel */
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .carousel {
+            display: flex;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            height: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .carousel-slide:hover img {
+            transform: scale(1.05);
+        }
+
+        .carousel-controls {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.6);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .carousel-controls:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .prev {
+            left: 20px;
+        }
+
+        .next {
+            right: 20px;
+        }
+
+        .carousel-indicators {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            margin: 0 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .indicator.active {
+            background: #fff;
+            transform: scale(1.2);
+        }
+
+        /* Contact Section */
+        .contact {
+            background: rgba(0,0,0,0.7);
+            padding: 60px 0;
+            margin-top: 80px;
+            backdrop-filter: blur(10px);
+            border-top: 2px solid #444;
+        }
+
+        .contact h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: #fff;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+            min-width: 200px;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.1);
+        }
+
+        .contact-item h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .contact-item p {
+            font-size: 1.1rem;
+            color: #ccc;
+        }
+
+        .contact-item a {
+            color: #4ecdc4;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item a:hover {
+            color: #45b7aa;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .gallery-main-title {
+                font-size: 2.2rem;
+            }
+            
+            .gallery-title {
+                font-size: 1.5rem;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .contact-info {
+                gap: 30px;
+            }
+            
+            .carousel-slide {
+                height: 250px;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>Erik Marron</h1>
+            <div class="location">Indianola, Iowa</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="description">
+            <p>Teenage car enthusiast with a camera, obsessed with showcasing your vehicle's personality through breathtaking, crystal-clear imagery.</p>
+        </div>
+
+        <div class="gallery-section">
+            <h2 class="gallery-main-title">PORTFOLIO</h2>
+            <div class="gallery-grid">
+                <div class="gallery-box">
+                    <h3 class="gallery-title">Dodge Charger</h3>
+                    <div class="carousel-container">
+                        <div class="carousel" id="carousel1">
+                            <div class="carousel-slide">
+                                <img src="https://files.catbox.moe/80ncl9.jpeg?w=800&h=600&fit=crop" alt="photo1" />
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="https://files.catbox.moe/2kmslp.jpeg?w=800&h=600&fit=crop" alt="photo2" />
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="https://files.catbox.moe/04uafe.jpeg?w=800&h=600&fit=crop" alt="photo3" />
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="https://files.catbox.moe/fpy2kf.jpeg?w=800&h=600&fit=crop" alt="photo4" />
+                            </div>
+                        </div>
+                        <button class="carousel-controls prev" onclick="previousSlide('carousel1')">&lt;</button>
+                        <button class="carousel-controls next" onclick="nextSlide('carousel1')">&gt;</button>
+                    </div>
+                    <div class="carousel-indicators">
+                        <span class="indicator active" onclick="currentSlide('carousel1', 0)"></span>
+                        <span class="indicator" onclick="currentSlide('carousel1', 1)"></span>
+                        <span class="indicator" onclick="currentSlide('carousel1', 2)"></span>
+                        <span class="indicator" onclick="currentSlide('carousel1', 3)"></span>
+                    </div>
+                </div>
+
+                <div class="gallery-box">
+                    <h3 class="gallery-title">Nissan Silvia</h3>
+                    <div class="carousel-container">
+                        <div class="carousel" id="carousel2">
+                            <div class="carousel-slide">
+                                <img src="https://files.catbox.moe/9ps5eo.jpeg?w=800&h=600&fit=crop" alt="photo5" />
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="https://files.catbox.moe/thq5h3.jpeg?w=800&h=600&fit=crop" alt="photo6" />
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="https://files.catbox.moe/35ekto.jpeg?w=800&h=600&fit=crop" alt="photo7" />
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="https://files.catbox.moe/pan1mn.jpeg?w=800&h=600&fit=crop" alt="photo8" />
+                            </div>
+                        </div>
+                        <button class="carousel-controls prev" onclick="previousSlide('carousel2')">&lt;</button>
+                        <button class="carousel-controls next" onclick="nextSlide('carousel2')">&gt;</button>
+                    </div>
+                    <div class="carousel-indicators">
+                        <span class="indicator active" onclick="currentSlide('carousel2', 0)"></span>
+                        <span class="indicator" onclick="currentSlide('carousel2', 1)"></span>
+                        <span class="indicator" onclick="currentSlide('carousel2', 2)"></span>
+                        <span class="indicator" onclick="currentSlide('carousel2', 3)"></span>
+                    </div>
+                </div>
+
+                <div class="gallery-box">
+                    <h3 class="gallery-title">Mazda 6</h3>
+                    <div class="carousel-container">
+                        <div class="carousel" id="carousel3">
+                            <div class="carousel-slide">
+                                <img src="https://files.catbox.moe/0crplt.jpg?w=800&h=600&fit=crop" alt="photo9" />
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="https://files.catbox.moe/amq1ji.jpg?w=800&h=600&fit=crop" alt="photo10" />
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="https://files.catbox.moe/3g82bz.jpg?w=800&h=600&fit=crop" alt="photo11" />
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="https://files.catbox.moe/739z6x.jpg?w=800&h=600&fit=crop" alt="photo12" />
+                            </div>
+                        </div>
+                        <button class="carousel-controls prev" onclick="previousSlide('carousel3')">&lt;</button>
+                        <button class="carousel-controls next" onclick="nextSlide('carousel3')">&gt;</button>
+                    </div>
+                    <div class="carousel-indicators">
+                        <span class="indicator active" onclick="currentSlide('carousel3', 0)"></span>
+                        <span class="indicator" onclick="currentSlide('carousel3', 1)"></span>
+                        <span class="indicator" onclick="currentSlide('carousel3', 2)"></span>
+                        <span class="indicator" onclick="currentSlide('carousel3', 3)"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="contact">
+        <div class="container">
+            <h2>Get In Touch</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <h3>Snapchat</h3>
+                    <p><a href="https://snapchat.com/add/erixk98">@erixk98</a></p>
+                </div>
+                <div class="contact-item">
+                    <h3>Phone</h3>
+                    <p><a href="tel:+15153374242">(515) 337-4242</a></p>
+                </div>
+                <div class="contact-item">
+                    <h3>Instagram</h3>
+                    <p><a href="https://instagram.com/eri_kphotography">@eri_kphotography</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlideIndex = {
+            carousel1: 0,
+            carousel2: 0,
+            carousel3: 0
+        };
+
+        function showSlide(carouselId, index) {
+            const carousel = document.getElementById(carouselId);
+            const totalSlides = carousel.children.length;
+            
+            if (index >= totalSlides) {
+                currentSlideIndex[carouselId] = 0;
+            } else if (index < 0) {
+                currentSlideIndex[carouselId] = totalSlides - 1;
+            } else {
+                currentSlideIndex[carouselId] = index;
+            }
+            
+            const translateX = -currentSlideIndex[carouselId] * 100;
+            carousel.style.transform = `translateX(${translateX}%)`;
+            
+            updateIndicators(carouselId);
+        }
+
+        function nextSlide(carouselId) {
+            showSlide(carouselId, currentSlideIndex[carouselId] + 1);
+        }
+
+        function previousSlide(carouselId) {
+            showSlide(carouselId, currentSlideIndex[carouselId] - 1);
+        }
+
+        function currentSlide(carouselId, index) {
+            showSlide(carouselId, index);
+        }
+
+        function updateIndicators(carouselId) {
+            const carouselContainer = document.getElementById(carouselId).parentElement.parentElement;
+            const indicators = carouselContainer.querySelectorAll('.indicator');
+            
+            indicators.forEach((indicator, index) => {
+                if (index === currentSlideIndex[carouselId]) {
+                    indicator.classList.add('active');
+                } else {
+                    indicator.classList.remove('active');
+                }
+            });
+        }
+
+        // Auto-play functionality
+        function autoPlay() {
+            Object.keys(currentSlideIndex).forEach(carouselId => {
+                nextSlide(carouselId);
+            });
+        }
+
+        // Auto-advance slides every 5 seconds
+        setInterval(autoPlay, 5000);
+
+        // Add touch/swipe support for mobile
+        let startX = 0;
+        let endX = 0;
+
+        document.addEventListener('touchstart', function(e) {
+            startX = e.touches[0].clientX;
+        });
+
+        document.addEventListener('touchend', function(e) {
+            endX = e.changedTouches[0].clientX;
+            handleSwipe(e.target);
+        });
+
+        function handleSwipe(target) {
+            const carousel = target.closest('.carousel-container');
+            if (!carousel) return;
+            
+            const carouselId = carousel.querySelector('.carousel').id;
+            const swipeDistance = startX - endX;
+            
+            if (Math.abs(swipeDistance) > 50) {
+                if (swipeDistance > 0) {
+                    nextSlide(carouselId);
+                } else {
+                    previousSlide(carouselId);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
